@@ -1,0 +1,48 @@
+.navbar {
+  height: 70px;
+  width: 100%;
+  background-color: #2972FF;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nav-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-controls button,
+.nav-controls select {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.nav-controls button {
+  background-color: #2563eb;
+  color: white;
+}
+
+.nav-controls button:hover {
+  opacity: 0.9;
+}
+
+.nav-controls select {
+  background-color: white;
+  color: black;
+}
