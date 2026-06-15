@@ -2,7 +2,7 @@
   width: 25px;
   height: 25px;
 
-  border: 1px solid #3082ef;
+  border: 1px solid #4691f4;
 }
 
 .start {
@@ -14,4 +14,11 @@
 }
 .wall{
     background-color: rgb(35, 34, 34);
+}
+.visited {
+    background-color: #60a5fa;
+}
+
+.path {
+    background-color: yellow;
 }

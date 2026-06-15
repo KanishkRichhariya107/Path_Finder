@@ -7,6 +7,7 @@ export function CreateNode(row,col){
         isVisited: false,
         isWall: false,
         PreviousNode: null,
+        isPath: false,
         }
         return node;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import './Navbar.css'
-const Navbar = () => {
+const Navbar = ({setVisualize}) => {
   return (
     <div>
       <div className="navbar">        
@@ -8,7 +8,7 @@ const Navbar = () => {
             Algorithm Visualizer
         </div>
         <div className="nav-controls">
-            <button>Visualize</button>
+            <button onClick={()=>setVisualize(true)}>Visualize</button>
             <select >
                 <option > Djikstra</option>
                 <option > BFS</option>

@@ -8,8 +8,13 @@ function Node({ node,onMouseDown,
         extraclass="finish"
     else if(node.isStart)
         extraclass="start"
+    else if(node.isPath)
+        extraclass="path"
+    else if(node.isVisited)
+        extraclass="visited"
     else if(node.isWall)
         extraclass="wall"
+
   return (  
     <div className={`node ${extraclass}`}
     onMouseDown={onMouseDown}

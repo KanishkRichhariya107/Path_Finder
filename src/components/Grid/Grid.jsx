@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { CreateGrid } from '../../utils/CreateGrid'
 import Node from '../Node/Node'
 import { bfs } from '../../Algorithms/bfs'
+import { useEffect } from 'react'
 
-const Grid = () => {
+const Grid = ({visualize,setVisualize}) => {
     const [grid,setGrid]=useState(CreateGrid(30,40))
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
@@ -17,6 +18,12 @@ const [endPosition, setEndPosition] = useState({
     row: 10,
     col: 30
 });
+    useEffect(() => {
+        if(!visualize) return;
+        visualizeBFS();
+        setVisualize(false);
+
+    }, [visualize]);
 
     console.log(grid)
     
@@ -33,14 +40,8 @@ const [endPosition, setEndPosition] = useState({
         const newStart =newGrid[row][col];
         if(newStart.isWall)
             return;
-
-    const oldStart =
-        newGrid[startPosition.row][startPosition.col];
-
+    const oldStart =newGrid[startPosition.row][startPosition.col];
     oldStart.isStart = false;
-
-
-
     newStart.isStart = true;
 
     setStartPosition({
@@ -103,13 +104,47 @@ function moveEndNode(row, col) {
         if(!mousePressed) return;
         toggleWall(row,col);
     }
-const startnode=grid[startPosition.row][startPosition.col]
-const EndNode=grid[endPosition.row][endPosition.col]
-const result=bfs(grid,startnode,EndNode)
-console.log("visited nodes are")
-console.log(result.visitedNodes)
-console.log("resuleted path is")
-console.log(result.path)
+    function animateVisitedNodes(path,visitedNodes){
+        for(let i=0;i<visitedNodes.length;i++){
+            setTimeout(() => {
+                const node=visitedNodes[i];
+                const newGrid=[...grid]
+                newGrid[node.row][node.col].isVisited=true;
+                setGrid([...newGrid]);
+            if(i === visitedNodes.length - 1) {
+                animatePath(path);
+            }
+            }, 20*i);
+        }
+    }
+    function animatePath(path){
+        for(let i=0;i<path.length;i++){
+            setTimeout(() => {
+                const node=path[i];
+                const newGrid=[...grid]
+                newGrid[node.row][node.col].isPath=true;
+                setGrid([...newGrid])
+            }, 40*i);
+        }
+    }
+    function clearVisited(result){
+
+    for(const node of result.visitedNodes){
+        node.isVisited = false;
+    }
+
+    for(const node of result.path){
+        node.isPath = false;
+    }
+}
+    function visualizeBFS(){
+    const startnode=grid[startPosition.row][startPosition.col]
+    const EndNode=grid[endPosition.row][endPosition.col]
+    const result=bfs(grid,startnode,EndNode)
+    clearVisited(result);
+    animateVisitedNodes(result.path,result.visitedNodes)
+
+    }
 
   return (
     <div>
