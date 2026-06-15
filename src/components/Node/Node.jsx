@@ -1,12 +1,21 @@
 import React from 'react'
 import './Node.css'
-const Node = ({node}) => {
-  return (
-    <div className={`node
-    ${node.isStart ?"start":""}
-    ${node.isEnd?"finish":""}
-    ${node.isWall?"wall":""}
-    `}>
+function Node({ node,onMouseDown,
+    onMouseEnter,
+    onMouseUp }){
+    let extraclass="";
+    if(node.isEnd)
+        extraclass="finish"
+    else if(node.isStart)
+        extraclass="start"
+    else if(node.isWall)
+        extraclass="wall"
+  return (  
+    <div className={`node ${extraclass}`}
+    onMouseDown={onMouseDown}
+    onMouseUp={onMouseUp}
+    onMouseEnter={onMouseEnter}
+    >
       
     </div>
   )
