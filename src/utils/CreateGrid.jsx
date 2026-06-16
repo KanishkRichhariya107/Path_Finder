@@ -8,6 +8,7 @@ export function CreateNode(row,col){
         isWall: false,
         PreviousNode: null,
         isPath: false,
+        distance: Infinity
         }
         return node;
 }

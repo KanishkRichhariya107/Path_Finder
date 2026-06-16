@@ -1,6 +1,6 @@
 import React from 'react'
 import './Navbar.css'
-const Navbar = ({setVisualize}) => {
+const Navbar = ({setVisualize,setAlgorithm,Algorithm}) => {
   return (
     <div>
       <div className="navbar">        
@@ -9,9 +9,11 @@ const Navbar = ({setVisualize}) => {
         </div>
         <div className="nav-controls">
             <button onClick={()=>setVisualize(true)}>Visualize</button>
-            <select >
-                <option > Djikstra</option>
+            <select onChange={(e)=>
+              setAlgorithm(e.target.value)
+            }>
                 <option > BFS</option>
+                <option > Djikstra</option>
                 <option > DFS</option>
                 <option > A*</option>
             </select>            

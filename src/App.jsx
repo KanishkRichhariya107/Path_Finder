@@ -5,13 +5,19 @@ import Grid from './components/Grid/Grid'
 function App() {
 
   const [visualize, setVisualize] = useState(false);
+  const [Algorithm,setAlgorithm]= useState("BFS")
 
   return (
     <>
-      <Navbar setVisualize={setVisualize}/>
+      <Navbar 
+      setVisualize={setVisualize}
+      setAlgorithm={setAlgorithm}
+      Algorithm={Algorithm}
+      />
       <Grid
         visualize={visualize}
         setVisualize={setVisualize}
+        Algorithm={Algorithm}
       />
     </>
   )
