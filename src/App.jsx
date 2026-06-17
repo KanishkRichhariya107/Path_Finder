@@ -7,6 +7,7 @@ function App() {
   const [visualize, setVisualize] = useState(false);
   const [Algorithm,setAlgorithm]= useState("BFS")
   const [reset,setReset]= useState(false)
+  const [clearPath,setClearPath]= useState(false)
 
   return (
     <>
@@ -16,13 +17,17 @@ function App() {
       Algorithm={Algorithm}
       reset={reset}
       setReset={setReset}
+      clearPath={clearPath}
+      setClearPath={setClearPath}
       />
       <Grid
         visualize={visualize}
         setVisualize={setVisualize}
         Algorithm={Algorithm}
         reset={reset}
-        setReset={setReset}        
+        setReset={setReset}      
+        clearPath={clearPath}
+      setClearPath={setClearPath}  
       />
     </>
   )

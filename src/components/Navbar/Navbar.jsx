@@ -1,6 +1,6 @@
 import React from 'react'
 import './Navbar.css'
-const Navbar = ({setVisualize,setAlgorithm,Algorithm,Reset,setReset}) => {
+const Navbar = ({setVisualize,setAlgorithm,Algorithm,reset,setReset,clearPath,setClearPath}) => {
   return (
     <div>
       <div className="navbar">        
@@ -9,6 +9,7 @@ const Navbar = ({setVisualize,setAlgorithm,Algorithm,Reset,setReset}) => {
         </div>
         <div className="nav-controls">
           <button onClick={()=>setReset(true)}>Reset Grid</button>
+          <button onClick={()=>setClearPath(true)}>clear path</button>
             <button onClick={()=>setVisualize(true)}>Visualize</button>
             <select onChange={(e)=>
               setAlgorithm(e.target.value)

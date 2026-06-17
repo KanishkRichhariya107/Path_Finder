@@ -6,7 +6,7 @@ import { dfs } from '../../Algorithms/dfs'
 import { dijkstra } from '../../Algorithms/dijkstra'
 import { useEffect } from 'react'
 
-const Grid = ({visualize,setVisualize,Algorithm,reset,setReset}) => {
+const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClearPath}) => {
     const [grid,setGrid]=useState(CreateGrid(30,40))
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
@@ -21,13 +21,41 @@ const [endPosition, setEndPosition] = useState({
     col: 30
 });
 useEffect(()=>{
-if(reset){
+    if(!reset)
+        return;
+    resetBoard();
     setReset(false);
-    resetpath();
-    
-}
 },[reset])
-    useEffect(() => {
+
+function resetBoard(){
+
+    setGrid(CreateGrid(30,40));
+
+    setStartPosition({
+        row:10,
+        col:5
+    });
+
+    setEndPosition({
+        row:10,
+        col:30
+    });
+
+    setMousePressed(false);
+    setIsDragStart(false);
+    setIsDragEnd(false);
+}
+useEffect(() => {
+
+    if(!clearPath)
+        return;
+
+    clearpath();
+
+    setClearPath(false);
+
+}, [clearPath]);    
+useEffect(() => {
         if(!visualize) return;
         if(Algorithm=="BFS")
             visualizeBFS();
@@ -39,23 +67,6 @@ if(reset){
 
     }, [visualize]);
 
-   function resetpath(){
-    const newgrid=[...grid]
-    for(let r=0;r<grid.length;r++){
-        for(let c=0;c< grid[r].length;c++)
-        {
-            newgrid[r][c].isVisited=false;
-            newgrid[r][c].isPath=false;
-            newgrid[r][c].PreviousNode=null;
-            newgrid[r][c].distance = Infinity;
-            newgrid[r][c].isWall = false;
-        }
-    }
-    moveStartNode(10,5);
-    moveEndNode(10,30);
-
-    setGrid([...newgrid])
-} 
     function toggleWall(row,col){
         const newGrid=[...grid]
             if(newGrid[row][col].isStart || newGrid[row][col].isEnd) {
@@ -136,8 +147,7 @@ function moveEndNode(row, col) {
     }
     function animateVisitedNodes(path,visitedNodes){
         for(let i=0;i<visitedNodes.length;i++){
-            if(reset)
-                break;
+
             setTimeout(() => {
 
                 const node=visitedNodes[i];
@@ -152,8 +162,7 @@ function moveEndNode(row, col) {
     }
     function animatePath(path){
         for(let i=0;i<path.length;i++){
-            if(reset==true)
-                break;
+
             setTimeout(() => {
                 const node=path[i];
                 const newGrid=[...grid]
