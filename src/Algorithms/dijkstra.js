@@ -4,10 +4,8 @@ function getNeighbours(grid, node) {
 
     if (row > 0)
         neighbours.push(grid[row - 1][col]);
-
     if (row < grid.length - 1)
         neighbours.push(grid[row + 1][col]);
-
     if (col > 0)
         neighbours.push(grid[row][col - 1]);
 
@@ -45,13 +43,10 @@ function getAllNodes(grid) {
 export function dijkstra(grid, startNode, endNode) {
 
     const visitedNodes = [];
-
     startNode.distance = 0;
-
     const unvisitedNodes = getAllNodes(grid);
 
     while (unvisitedNodes.length > 0) {
-
         unvisitedNodes.sort(
             (a, b) => a.distance - b.distance
         );

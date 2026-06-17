@@ -6,7 +6,7 @@ import { dfs } from '../../Algorithms/dfs'
 import { dijkstra } from '../../Algorithms/dijkstra'
 import { useEffect } from 'react'
 
-const Grid = ({visualize,setVisualize,Algorithm}) => {
+const Grid = ({visualize,setVisualize,Algorithm,reset,setReset}) => {
     const [grid,setGrid]=useState(CreateGrid(30,40))
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
@@ -20,6 +20,13 @@ const [endPosition, setEndPosition] = useState({
     row: 10,
     col: 30
 });
+useEffect(()=>{
+if(reset){
+    setReset(false);
+    resetpath();
+    
+}
+},[reset])
     useEffect(() => {
         if(!visualize) return;
         if(Algorithm=="BFS")
@@ -32,7 +39,23 @@ const [endPosition, setEndPosition] = useState({
 
     }, [visualize]);
 
-    
+   function resetpath(){
+    const newgrid=[...grid]
+    for(let r=0;r<grid.length;r++){
+        for(let c=0;c< grid[r].length;c++)
+        {
+            newgrid[r][c].isVisited=false;
+            newgrid[r][c].isPath=false;
+            newgrid[r][c].PreviousNode=null;
+            newgrid[r][c].distance = Infinity;
+            newgrid[r][c].isWall = false;
+        }
+    }
+    moveStartNode(10,5);
+    moveEndNode(10,30);
+
+    setGrid([...newgrid])
+} 
     function toggleWall(row,col){
         const newGrid=[...grid]
             if(newGrid[row][col].isStart || newGrid[row][col].isEnd) {
@@ -113,7 +136,10 @@ function moveEndNode(row, col) {
     }
     function animateVisitedNodes(path,visitedNodes){
         for(let i=0;i<visitedNodes.length;i++){
+            if(reset)
+                break;
             setTimeout(() => {
+
                 const node=visitedNodes[i];
                 const newGrid=[...grid]
                 newGrid[node.row][node.col].isVisited=true;
@@ -121,11 +147,13 @@ function moveEndNode(row, col) {
             if(i === visitedNodes.length - 1) {
                 animatePath(path);
             }
-            }, 20*i);
+            }, 5*i);
         }
     }
     function animatePath(path){
         for(let i=0;i<path.length;i++){
+            if(reset==true)
+                break;
             setTimeout(() => {
                 const node=path[i];
                 const newGrid=[...grid]
@@ -148,7 +176,7 @@ function clearpath(){
     setGrid([...newgrid])
 }
 
-    function visualizeBFS(){
+function visualizeBFS(){
         clearpath()
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -159,7 +187,7 @@ function clearpath(){
     animateVisitedNodes(result.path,result.visitedNodes)
 
     }
-    function visualizeDFS(){
+function visualizeDFS(){
         clearpath()
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -168,10 +196,10 @@ function clearpath(){
     node.isVisited = false;
 }
     console.log(result.visitedNodes.length)
-console.log(result.path.length)
+    console.log(result.path.length)
     animateVisitedNodes(result.path,result.visitedNodes)
     }
-    function visualizeDijkstra(){
+function visualizeDijkstra(){
         clearpath()
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]

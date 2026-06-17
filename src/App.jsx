@@ -6,6 +6,7 @@ function App() {
 
   const [visualize, setVisualize] = useState(false);
   const [Algorithm,setAlgorithm]= useState("BFS")
+  const [reset,setReset]= useState(false)
 
   return (
     <>
@@ -13,11 +14,15 @@ function App() {
       setVisualize={setVisualize}
       setAlgorithm={setAlgorithm}
       Algorithm={Algorithm}
+      reset={reset}
+      setReset={setReset}
       />
       <Grid
         visualize={visualize}
         setVisualize={setVisualize}
         Algorithm={Algorithm}
+        reset={reset}
+        setReset={setReset}        
       />
     </>
   )
