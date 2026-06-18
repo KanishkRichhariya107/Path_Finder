@@ -3,6 +3,7 @@ import { CreateGrid } from '../../utils/CreateGrid'
 import Node from '../Node/Node'
 import { bfs } from '../../Algorithms/bfs'
 import { dfs } from '../../Algorithms/dfs'
+import { astar } from '../../Algorithms/astar'
 import { dijkstra } from '../../Algorithms/dijkstra'
 import { useEffect } from 'react'
 
@@ -11,6 +12,7 @@ const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClea
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
     const [isDragEnd, setIsDragEnd] = useState(false);
+    const [isRemovingWall, setIsRemovingWall] = useState(false);
     const [startPosition, setStartPosition] = useState({
     row: 10,
     col: 5
@@ -63,6 +65,8 @@ useEffect(() => {
             visualizeDFS();
         else if(Algorithm=="Dijkstra")
             visualizeDijkstra();
+        else if(Algorithm=="A*")
+            visualizeAstar();
         setVisualize(false);
 
     }, [visualize]);
@@ -91,6 +95,29 @@ useEffect(() => {
     });
 
     setGrid(newGrid);
+}
+function addWall(row,col){
+
+    const newGrid=[...grid];
+
+    const node=newGrid[row][col];
+
+    if(node.isStart || node.isEnd)
+        return;
+
+    node.isWall=true;
+
+    setGrid([...newGrid]);
+}
+function removeWall(row,col){
+
+    const newGrid=[...grid];
+
+    const node=newGrid[row][col];
+
+    node.isWall=false;
+
+    setGrid([...newGrid]);
 }
 function moveEndNode(row, col) {
     const newGrid = [...grid];
@@ -123,14 +150,22 @@ function moveEndNode(row, col) {
             setIsDragEnd(true)
             return;
         }
-        toggleWall(row,col)
         setMousePressed(true);
+        if(grid[row][col].isWall){
+            setIsRemovingWall(true);
+        }
+        else{
+            setIsRemovingWall(false);
+        }        
+        toggleWall(row,col)
+        
 
     }
     function handleMouseUp(row,col){
         setIsDragEnd(false);
         setIsDragStart(false);
         setMousePressed(false);
+        setIsRemovingWall(false);
     }
     function handleMouseEnter(row,col){
         
@@ -143,7 +178,12 @@ function moveEndNode(row, col) {
                      return;
         }
         if(!mousePressed) return;
-        toggleWall(row,col);
+        if(isRemovingWall)
+            removeWall(row,col);
+        else
+            addWall(row,col);
+        
+        
     }
     function animateVisitedNodes(path,visitedNodes){
         for(let i=0;i<visitedNodes.length;i++){
@@ -180,6 +220,8 @@ function clearpath(){
             newgrid[r][c].isPath=false;
             newgrid[r][c].PreviousNode=null;
             newgrid[r][c].distance = Infinity;
+            newgrid[r][c].gScore = Infinity;
+            newgrid[r][c].fScore = Infinity;
         }
     }
     setGrid([...newgrid])
@@ -190,6 +232,17 @@ function visualizeBFS(){
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=bfs(grid,startnode,EndNode)
+    for(const node of result.visitedNodes){
+    node.isVisited = false;
+}
+    animateVisitedNodes(result.path,result.visitedNodes)
+
+    }
+function visualizeAstar(){
+        clearpath()
+    const startnode=grid[startPosition.row][startPosition.col]
+    const EndNode=grid[endPosition.row][endPosition.col]
+    const result=astar(grid,startnode,EndNode)
     for(const node of result.visitedNodes){
     node.isVisited = false;
 }
