@@ -5,7 +5,7 @@ const Navbar = ({setVisualize,setAlgorithm,Algorithm,reset,setReset,clearPath,se
     <div>
       <div className="navbar">        
         <div className='logo'>
-            Algorithm Visualizer
+                PathFinder 
         </div>
         <div className="nav-controls">
           <button onClick={()=>setReset(true)}>Reset Grid</button>
@@ -18,6 +18,7 @@ const Navbar = ({setVisualize,setAlgorithm,Algorithm,reset,setReset,clearPath,se
                 <option > Dijkstra</option>
                 <option > DFS</option>
                 <option > A*</option>
+                <option > Bi-directional BFS</option>
             </select>            
         </div>
       </div>

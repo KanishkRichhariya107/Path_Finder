@@ -5,22 +5,23 @@ import { bfs } from '../../Algorithms/bfs'
 import { dfs } from '../../Algorithms/dfs'
 import { astar } from '../../Algorithms/astar'
 import { dijkstra } from '../../Algorithms/dijkstra'
+import { bidirectionalBfs } from '../../Algorithms/bidirectionalBfs'
 import { useEffect } from 'react'
-
+import "./Grid.css"
 const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClearPath}) => {
-    const [grid,setGrid]=useState(CreateGrid(30,40))
+    const [grid,setGrid]=useState(CreateGrid(25,55))
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
     const [isDragEnd, setIsDragEnd] = useState(false);
     const [isRemovingWall, setIsRemovingWall] = useState(false);
     const [startPosition, setStartPosition] = useState({
     row: 10,
-    col: 5
+    col: 10
 });
 
 const [endPosition, setEndPosition] = useState({
     row: 10,
-    col: 30
+    col: 45
 });
 useEffect(()=>{
     if(!reset)
@@ -31,16 +32,16 @@ useEffect(()=>{
 
 function resetBoard(){
 
-    setGrid(CreateGrid(30,40));
+    setGrid(CreateGrid(25,55));
 
     setStartPosition({
         row:10,
-        col:5
+        col:10
     });
 
     setEndPosition({
         row:10,
-        col:30
+        col:45
     });
 
     setMousePressed(false);
@@ -67,6 +68,8 @@ useEffect(() => {
             visualizeDijkstra();
         else if(Algorithm=="A*")
             visualizeAstar();
+        else if(Algorithm=="Bi-directional BFS")
+            visualizeBidirectionalBFS();
         setVisualize(false);
 
     }, [visualize]);
@@ -197,7 +200,7 @@ function moveEndNode(row, col) {
             if(i === visitedNodes.length - 1) {
                 animatePath(path);
             }
-            }, 5*i);
+            }, i);
         }
     }
     function animatePath(path){
@@ -222,6 +225,7 @@ function clearpath(){
             newgrid[r][c].distance = Infinity;
             newgrid[r][c].gScore = Infinity;
             newgrid[r][c].fScore = Infinity;
+            newgrid[r][c].EndPreviousNode=null;
         }
     }
     setGrid([...newgrid])
@@ -232,6 +236,17 @@ function visualizeBFS(){
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=bfs(grid,startnode,EndNode)
+    for(const node of result.visitedNodes){
+    node.isVisited = false;
+}
+    animateVisitedNodes(result.path,result.visitedNodes)
+
+    }
+function visualizeBidirectionalBFS(){
+        clearpath()
+    const startnode=grid[startPosition.row][startPosition.col]
+    const EndNode=grid[endPosition.row][endPosition.col]
+    const result=bidirectionalBfs(grid,startnode,EndNode)
     for(const node of result.visitedNodes){
     node.isVisited = false;
 }
@@ -275,11 +290,11 @@ console.log(result.path.length)
     }
 
   return (
-    <div>
+    <div className="grid-container">
       {
         grid.map((row,rowIndex)=>(
             
-        <div key={rowIndex} style={{display:'flex'}}>
+        <div key={rowIndex} className="grid-row">
             {
                 
                 row.map((node)=>(

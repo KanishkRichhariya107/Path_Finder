@@ -2,15 +2,16 @@ export function CreateNode(row,col){
     const node= {
         row,
         col,
-        isStart: row==10&&col==5,
-        isEnd: row==10&&col==30,
+        isStart: row==10&&col==10,
+        isEnd: row==10&&col==45,
         isVisited: false,
         isWall: false,
         PreviousNode: null,
+        EndPreviousNode:null,
         isPath: false,
         distance: Infinity,
-    gScore: Infinity,
-    fScore: Infinity
+        gScore: Infinity,
+        fScore: Infinity
         }
         return node;
 }

@@ -4,12 +4,12 @@ function Node({ node,onMouseDown,
     onMouseEnter,
     onMouseUp }){
     let extraclass="";
-    if(node.isEnd)
+     if(node.isPath)
+        extraclass="path"
+    else if(node.isEnd)
         extraclass="finish"
     else if(node.isStart)
         extraclass="start"
-    else if(node.isPath)
-        extraclass="path"
     else if(node.isVisited)
         extraclass="visited"
     else if(node.isWall)

@@ -1,7 +1,7 @@
 .navbar {
-  height: 70px;
+  height: 75px;
   width: 100%;
-  background-color: #2972FF;
+  background: #2972FF;
   color: white;
 
   display: flex;
@@ -9,12 +9,16 @@
   align-items: center;
 
   padding: 0 2rem;
+
   box-sizing: border-box;
+
+  box-shadow: 0 5px 20px rgba(0,0,0,.15);
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  letter-spacing: .5px;
   cursor: pointer;
 }
 
@@ -26,23 +30,65 @@
 
 .nav-controls button,
 .nav-controls select {
-  padding: 0.6rem 1rem;
+
+  padding: 12px 20px;
+
   border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
+
+  border-radius: 12px;
+
+  font-size: .95rem;
+
+  font-weight: 500;
+
   cursor: pointer;
+
+  transition: all .2s ease;
 }
 
 .nav-controls button {
-  background-color: #2563eb;
+
+  background: #1d4ed8;
+
   color: white;
+
+  box-shadow:
+      0 4px 12px rgba(0,0,0,.15);
 }
 
 .nav-controls button:hover {
-  opacity: 0.9;
+
+  background: #1e40af;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+      0 10px 20px rgba(0,0,0,.2);
+}
+
+.nav-controls button:active {
+
+  transform: scale(.96);
 }
 
 .nav-controls select {
-  background-color: white;
-  color: black;
+
+  background: white;
+
+  color: #111827;
+
+  outline: none;
+
+  font-weight: 500;
+
+  box-shadow:
+      0 4px 12px rgba(0,0,0,.1);
+}
+
+.nav-controls select:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+      0 10px 20px rgba(0,0,0,.15);
 }
