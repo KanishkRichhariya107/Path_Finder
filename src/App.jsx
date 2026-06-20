@@ -5,9 +5,11 @@ import Grid from './components/Grid/Grid'
 function App() {
 
   const [visualize, setVisualize] = useState(false);
-  const [Algorithm,setAlgorithm]= useState("BFS")
+  const [Algorithm,setAlgorithm]= useState("")
+const [mazeAlgorithm,setMazeAlgorithm]=useState("");
   const [reset,setReset]= useState(false)
   const [clearPath,setClearPath]= useState(false)
+  const [isAnimating, setIsAnimating] = useState(false);
 
   return (
     <>
@@ -19,6 +21,9 @@ function App() {
       setReset={setReset}
       clearPath={clearPath}
       setClearPath={setClearPath}
+      isAnimating={isAnimating}
+      mazeAlgorithm={mazeAlgorithm}
+      setMazeAlgorithm={setMazeAlgorithm}
       />
       <Grid
         visualize={visualize}
@@ -28,6 +33,9 @@ function App() {
         setReset={setReset}      
         clearPath={clearPath}
       setClearPath={setClearPath}  
+      isAnimating={isAnimating}
+      setIsAnimating={setIsAnimating}
+      MazeAlgorithm={mazeAlgorithm}
       />
     </>
   )

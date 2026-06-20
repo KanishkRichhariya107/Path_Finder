@@ -7,9 +7,12 @@ import { astar } from '../../Algorithms/astar'
 import { dijkstra } from '../../Algorithms/dijkstra'
 import { bidirectionalBfs } from '../../Algorithms/bidirectionalBfs'
 import { useEffect } from 'react'
+import { recursiveMaze } from '../../Algorithms/MazeAlgorithms/recursiveMaze'
+import { primMaze } from '../../Algorithms/MazeAlgorithms/primMaze'
+
 import "./Grid.css"
-const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClearPath}) => {
-    const [grid,setGrid]=useState(CreateGrid(25,55))
+const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClearPath,isAnimating,setIsAnimating,mazeAlgorithm}) => {
+    const [grid,setGrid]=useState(CreateGrid(22,52))
     const [mousePressed, setMousePressed] = useState(false);
     const [isDragStart, setIsDragStart] = useState(false);
     const [isDragEnd, setIsDragEnd] = useState(false);
@@ -29,10 +32,18 @@ useEffect(()=>{
     resetBoard();
     setReset(false);
 },[reset])
+useEffect(()=>{
 
+    if(mazeAlgorithm==="Recursive Maze")
+        generateRecursiveMaze();
+    else if(mazeAlgorithm==="Prim Maze")
+        generatePrimMaze();
+    else return;
+
+},[mazeAlgorithm]);
 function resetBoard(){
 
-    setGrid(CreateGrid(25,55));
+    setGrid(CreateGrid(22,52));
 
     setStartPosition({
         row:10,
@@ -70,6 +81,7 @@ useEffect(() => {
             visualizeAstar();
         else if(Algorithm=="Bi-directional BFS")
             visualizeBidirectionalBFS();
+        else return;
         setVisualize(false);
 
     }, [visualize]);
@@ -200,7 +212,7 @@ function moveEndNode(row, col) {
             if(i === visitedNodes.length - 1) {
                 animatePath(path);
             }
-            }, i);
+            }, 2*i);
         }
     }
     function animatePath(path){
@@ -211,7 +223,10 @@ function moveEndNode(row, col) {
                 const newGrid=[...grid]
                 newGrid[node.row][node.col].isPath=true;
                 setGrid([...newGrid])
-            }, 40*i);
+                if(i===path.length-1){
+                setIsAnimating(false);
+            }
+            }, 20*i);
         }
     }
 function clearpath(){
@@ -233,6 +248,7 @@ function clearpath(){
 
 function visualizeBFS(){
         clearpath()
+        setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=bfs(grid,startnode,EndNode)
@@ -244,6 +260,7 @@ function visualizeBFS(){
     }
 function visualizeBidirectionalBFS(){
         clearpath()
+        setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=bidirectionalBfs(grid,startnode,EndNode)
@@ -255,6 +272,7 @@ function visualizeBidirectionalBFS(){
     }
 function visualizeAstar(){
         clearpath()
+        setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=astar(grid,startnode,EndNode)
@@ -266,6 +284,7 @@ function visualizeAstar(){
     }
 function visualizeDFS(){
         clearpath()
+        setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=dfs(grid,startnode,EndNode)
@@ -278,6 +297,7 @@ function visualizeDFS(){
     }
 function visualizeDijkstra(){
         clearpath()
+        setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
     const result=dijkstra(grid,startnode,EndNode)
@@ -288,7 +308,75 @@ function visualizeDijkstra(){
 console.log(result.path.length)
     animateVisitedNodes(result.path,result.visitedNodes)
     }
+function animateMaze(nodes){
 
+    setIsAnimating(true);
+
+    const mazeGrid = CreateGrid(22,52);
+
+    for(const row of mazeGrid){
+        for(const node of row){
+
+            node.isWall=true;
+
+        }
+    }
+
+    mazeGrid[startPosition.row][startPosition.col].isWall=false;
+    mazeGrid[startPosition.row][startPosition.col].isStart=true;
+
+    mazeGrid[endPosition.row][endPosition.col].isWall=false;
+    mazeGrid[endPosition.row][endPosition.col].isEnd=true;
+
+    setGrid(mazeGrid);
+
+    setTimeout(()=>{
+
+        for(let i=0;i<nodes.length;i++){
+
+            setTimeout(()=>{
+
+                setGrid(prev=>{
+
+                    const copy=[...prev];
+
+                    const node=nodes[i];
+
+                    copy[node.row][node.col].isWall=false;
+
+                    return [...copy];
+
+                });
+
+                if(i===nodes.length-1)
+                    setIsAnimating(false);
+
+            },10*i);
+
+        }
+
+    },50);
+}
+function generateRecursiveMaze(){
+clearpath();
+    const newGrid=CreateGrid(22,52);
+
+    const nodes=
+        recursiveMaze(newGrid);
+
+    animateMaze(nodes);
+
+}
+function generatePrimMaze(){
+clearpath();
+    const newGrid=CreateGrid(22,52);
+
+    const nodes=
+        primMaze(newGrid);
+
+    animateMaze(nodes);
+
+}
   return (
     <div className="grid-container">
       {

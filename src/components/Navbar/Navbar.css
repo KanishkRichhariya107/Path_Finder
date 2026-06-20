@@ -16,8 +16,8 @@
 }
 
 .logo {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 500;
   letter-spacing: .5px;
   cursor: pointer;
 }
@@ -30,19 +30,12 @@
 
 .nav-controls button,
 .nav-controls select {
-
   padding: 12px 20px;
-
   border: none;
-
-  border-radius: 12px;
-
+  border-radius: 18px;
   font-size: .95rem;
-
   font-weight: 500;
-
   cursor: pointer;
-
   transition: all .2s ease;
 }
 
@@ -60,7 +53,9 @@
 
   background: #1e40af;
 
-  transform: translateY(-2px);
+  transform: 
+  translateY(-2px)
+  scale(1.05);
 
   box-shadow:
       0 10px 20px rgba(0,0,0,.2);
@@ -69,6 +64,12 @@
 .nav-controls button:active {
 
   transform: scale(.96);
+}
+
+button:disabled,
+select:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 .nav-controls select {

@@ -1,5 +1,9 @@
 import React from 'react'
 import './Node.css'
+import startIcon from "../../assets/monkey-svgrepo-com.svg";
+import startIcon1 from "../../assets/monkey-svgrepo-com1.svg";
+import finishIcon from "../../assets/banana-blackbarry-blackberries-svgrepo-com.svg";
+
 function Node({ node,onMouseDown,
     onMouseEnter,
     onMouseUp }){
@@ -21,6 +25,22 @@ function Node({ node,onMouseDown,
     onMouseUp={onMouseUp}
     onMouseEnter={onMouseEnter}
     >
+    {
+        node.isStart &&
+        <img
+            src={startIcon1}
+            className="node-icon"
+             
+        />
+    }
+
+    {
+        node.isEnd &&
+        <img
+            src={finishIcon}
+            className="node-icon"
+        />
+    }
       
     </div>
   )
