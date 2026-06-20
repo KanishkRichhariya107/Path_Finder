@@ -33,7 +33,7 @@ useEffect(()=>{
     setReset(false);
 },[reset])
 useEffect(()=>{
-
+        console.log(mazeAlgorithm);
     if(mazeAlgorithm==="Recursive Maze")
         generateRecursiveMaze();
     else if(mazeAlgorithm==="Prim Maze")
@@ -311,22 +311,23 @@ console.log(result.path.length)
 function animateMaze(nodes){
 
     setIsAnimating(true);
+    
 
     const mazeGrid = CreateGrid(22,52);
 
-    for(const row of mazeGrid){
-        for(const node of row){
-
-            node.isWall=true;
-
-        }
+for(const row of mazeGrid){
+    for(const node of row){
+        node.isStart = false;
+        node.isEnd = false;
+        node.isWall = true;
     }
+}
 
-    mazeGrid[startPosition.row][startPosition.col].isWall=false;
-    mazeGrid[startPosition.row][startPosition.col].isStart=true;
+mazeGrid[startPosition.row][startPosition.col].isWall = false;
+mazeGrid[startPosition.row][startPosition.col].isStart = true;
 
-    mazeGrid[endPosition.row][endPosition.col].isWall=false;
-    mazeGrid[endPosition.row][endPosition.col].isEnd=true;
+mazeGrid[endPosition.row][endPosition.col].isWall = false;
+mazeGrid[endPosition.row][endPosition.col].isEnd = true;
 
     setGrid(mazeGrid);
 

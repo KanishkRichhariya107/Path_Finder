@@ -35,7 +35,7 @@ const [mazeAlgorithm,setMazeAlgorithm]=useState("");
       setClearPath={setClearPath}  
       isAnimating={isAnimating}
       setIsAnimating={setIsAnimating}
-      MazeAlgorithm={mazeAlgorithm}
+      mazeAlgorithm={mazeAlgorithm}
       />
     </>
   )
