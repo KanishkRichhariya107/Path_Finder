@@ -9,6 +9,9 @@ import { bidirectionalBfs } from '../../Algorithms/bidirectionalBfs'
 import { useEffect } from 'react'
 import { recursiveMaze } from '../../Algorithms/MazeAlgorithms/recursiveMaze'
 import { primMaze } from '../../Algorithms/MazeAlgorithms/primMaze'
+import{ animateMaze } from "../../animations/animateMaze"
+
+import {animateVisitedNodes} from "../../animations/animateVisitedNodes"
 
 import "./Grid.css"
 const Grid = ({visualize,setVisualize,Algorithm,reset,setReset,clearPath,setClearPath,isAnimating,setIsAnimating,mazeAlgorithm}) => {
@@ -200,35 +203,6 @@ function moveEndNode(row, col) {
         
         
     }
-    function animateVisitedNodes(path,visitedNodes){
-        for(let i=0;i<visitedNodes.length;i++){
-
-            setTimeout(() => {
-
-                const node=visitedNodes[i];
-                const newGrid=[...grid]
-                newGrid[node.row][node.col].isVisited=true;
-                setGrid([...newGrid]);
-            if(i === visitedNodes.length - 1) {
-                animatePath(path);
-            }
-            }, 2*i);
-        }
-    }
-    function animatePath(path){
-        for(let i=0;i<path.length;i++){
-
-            setTimeout(() => {
-                const node=path[i];
-                const newGrid=[...grid]
-                newGrid[node.row][node.col].isPath=true;
-                setGrid([...newGrid])
-                if(i===path.length-1){
-                setIsAnimating(false);
-            }
-            }, 20*i);
-        }
-    }
 function clearpath(){
     const newgrid=[...grid]
     for(let r=0;r<grid.length;r++){
@@ -243,11 +217,12 @@ function clearpath(){
             newgrid[r][c].EndPreviousNode=null;
         }
     }
-    setGrid([...newgrid])
+    return newgrid
 }
 
 function visualizeBFS(){
-        clearpath()
+       const newgrid= clearpath()
+       setGrid([...newgrid])
         setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -255,11 +230,12 @@ function visualizeBFS(){
     for(const node of result.visitedNodes){
     node.isVisited = false;
 }
-    animateVisitedNodes(result.path,result.visitedNodes)
+    animateVisitedNodes(result.path,result.visitedNodes,grid,setGrid,setIsAnimating)
 
     }
 function visualizeBidirectionalBFS(){
-        clearpath()
+        const newgrid= clearpath()
+       setGrid([...newgrid])
         setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -267,11 +243,12 @@ function visualizeBidirectionalBFS(){
     for(const node of result.visitedNodes){
     node.isVisited = false;
 }
-    animateVisitedNodes(result.path,result.visitedNodes)
+    animateVisitedNodes(result.path,result.visitedNodes,grid,setGrid,setIsAnimating)
 
     }
 function visualizeAstar(){
-        clearpath()
+        const newgrid= clearpath()
+       setGrid([...newgrid])
         setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -279,11 +256,12 @@ function visualizeAstar(){
     for(const node of result.visitedNodes){
     node.isVisited = false;
 }
-    animateVisitedNodes(result.path,result.visitedNodes)
+    animateVisitedNodes(result.path,result.visitedNodes,grid,setGrid,setIsAnimating)
 
     }
 function visualizeDFS(){
-        clearpath()
+        const newgrid= clearpath()
+       setGrid([...newgrid])
         setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -293,10 +271,11 @@ function visualizeDFS(){
 }
     console.log(result.visitedNodes.length)
     console.log(result.path.length)
-    animateVisitedNodes(result.path,result.visitedNodes)
+    animateVisitedNodes(result.path,result.visitedNodes,grid,setGrid,setIsAnimating)
     }
 function visualizeDijkstra(){
-        clearpath()
+        const newgrid= clearpath()
+       setGrid([...newgrid])
         setIsAnimating(true);
     const startnode=grid[startPosition.row][startPosition.col]
     const EndNode=grid[endPosition.row][endPosition.col]
@@ -306,76 +285,29 @@ function visualizeDijkstra(){
 }
     console.log(result.visitedNodes.length)
 console.log(result.path.length)
-    animateVisitedNodes(result.path,result.visitedNodes)
+    animateVisitedNodes(result.path,result.visitedNodes,grid,setGrid,setIsAnimating)
     }
-function animateMaze(nodes){
 
-    setIsAnimating(true);
-    
-
-    const mazeGrid = CreateGrid(22,52);
-
-for(const row of mazeGrid){
-    for(const node of row){
-        node.isStart = false;
-        node.isEnd = false;
-        node.isWall = true;
-    }
-}
-
-mazeGrid[startPosition.row][startPosition.col].isWall = false;
-mazeGrid[startPosition.row][startPosition.col].isStart = true;
-
-mazeGrid[endPosition.row][endPosition.col].isWall = false;
-mazeGrid[endPosition.row][endPosition.col].isEnd = true;
-
-    setGrid(mazeGrid);
-
-    setTimeout(()=>{
-
-        for(let i=0;i<nodes.length;i++){
-
-            setTimeout(()=>{
-
-                setGrid(prev=>{
-
-                    const copy=[...prev];
-
-                    const node=nodes[i];
-
-                    copy[node.row][node.col].isWall=false;
-
-                    return [...copy];
-
-                });
-
-                if(i===nodes.length-1)
-                    setIsAnimating(false);
-
-            },10*i);
-
-        }
-
-    },50);
-}
 function generateRecursiveMaze(){
-clearpath();
+    const newgrid= clearpath()
+       setGrid([...newgrid]);
     const newGrid=CreateGrid(22,52);
 
     const nodes=
         recursiveMaze(newGrid);
 
-    animateMaze(nodes);
+    animateMaze(nodes,setGrid,setIsAnimating,startPosition,endPosition);
 
 }
 function generatePrimMaze(){
-clearpath();
+const newgrid= clearpath()
+       setGrid([...newgrid])
     const newGrid=CreateGrid(22,52);
 
     const nodes=
         primMaze(newGrid);
 
-    animateMaze(nodes);
+    animateMaze(nodes,setGrid,setIsAnimating,startPosition,endPosition);
 
 }
   return (

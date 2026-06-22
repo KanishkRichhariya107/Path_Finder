@@ -1,0 +1,56 @@
+.legend{
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+
+    padding:25px 0;
+
+    background:white;
+}
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:1.1rem;
+
+    font-weight:500;
+}
+
+.legend-item img{
+
+    width:28px;
+
+    height:28px;
+
+    user-select:none;
+
+    pointer-events:none;
+}
+
+.legend-node{
+
+    width:25px;
+
+    height:25px;
+
+    border-radius:3px;
+}
+
+.wall-node{
+    background:#222;
+}
+
+.visited-node{
+    background:#026ef2;
+}
+
+.path-node{
+    background:rgb(249,132,7);
+}

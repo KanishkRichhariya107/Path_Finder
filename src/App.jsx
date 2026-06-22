@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Grid from './components/Grid/Grid'
+import Legend from './components/Legend/legend';
+import Description from './components/Description/Description';
 
 function App() {
 
@@ -24,6 +26,10 @@ const [mazeAlgorithm,setMazeAlgorithm]=useState("");
       isAnimating={isAnimating}
       mazeAlgorithm={mazeAlgorithm}
       setMazeAlgorithm={setMazeAlgorithm}
+      />
+      <Legend/>
+      <Description
+      algorithm={Algorithm}
       />
       <Grid
         visualize={visualize}
