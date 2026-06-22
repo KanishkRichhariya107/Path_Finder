@@ -14,8 +14,9 @@ export function Visualize(Algorithm,grid,setGrid,setIsAnimating,startPosition,en
     const startnode=newgrid[startPosition.row][startPosition.col]
     const EndNode=newgrid[endPosition.row][endPosition.col]
     let result=[]
-    if(!Algorithm)
-     return;
+    if(!Algorithm){
+     setIsAnimating(false);
+     return;}
     else if(Algorithm=="BFS")
      result=bfs(newgrid,startnode,EndNode)
     else if(Algorithm==="DFS")
@@ -26,7 +27,10 @@ export function Visualize(Algorithm,grid,setGrid,setIsAnimating,startPosition,en
          result=astar(newgrid,startnode,EndNode)
     else if(Algorithm==="Bi-directional BFS")
          result=bidirectionalBfs(newgrid,startnode,EndNode)
-    
+    if (!result) {
+    setIsAnimating(false);
+    return;
+}
     for(const node of result.visitedNodes){
     node.isVisited = false;
 
