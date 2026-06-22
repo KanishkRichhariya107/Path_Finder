@@ -1,4 +1,5 @@
-function handleMouseDown(row,col,grid,setIsDragStart,setIsDragEnd,setMousePressed,setIsRemovingWall,toggleWall){
+import { toggleWall,removeWall,addWall } from "./wallHandlers";
+function handleMouseDown(row,col,grid,setGrid,setIsDragStart,setIsDragEnd,setMousePressed,setIsRemovingWall){
         const node=grid[row][col]
         if(node.isStart){
             setIsDragStart(true)
@@ -15,15 +16,15 @@ function handleMouseDown(row,col,grid,setIsDragStart,setIsDragEnd,setMousePresse
         else{
             setIsRemovingWall(false);
         }        
-        toggleWall(row,col)
+        toggleWall(row,col,grid,setGrid)
     }
-    function handleMouseUp(setIsDragEnd,setIsDragStart,setMousePressed,setIsRemovingWall){
+    function handleMouseUp(setMousePressed,setIsDragStart,setIsDragEnd,setIsRemovingWall){
         setIsDragEnd(false);
         setIsDragStart(false);
         setMousePressed(false);
         setIsRemovingWall(false);
     }
-    function handleMouseEnter(row,col,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall,removeWall,addWall){
+    function handleMouseEnter(row,col,grid,setGrid,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall){
         
         if(isDragStart){
                      moveStartNode(row,col)
@@ -35,9 +36,9 @@ function handleMouseDown(row,col,grid,setIsDragStart,setIsDragEnd,setMousePresse
         }
         if(!mousePressed) return;
         if(isRemovingWall)
-            removeWall(row,col);
+            removeWall(row,col,grid,setGrid);
         else
-            addWall(row,col);
+            addWall(row,col,grid,setGrid);
         
         
     }
