@@ -1,10 +1,8 @@
 import React from 'react'
 import './Node.css'
-import startIcon from "../../assets/r7lg_f6vb_210528.jpg";
-import startIcon1 from "../../assets/final.png";
-import startIcon2 from "../../assets/rat-svgrepo-com.svg";
-import finishIcon from "../../assets/banana-blackbarry-blackberries-svgrepo-com.svg";
-import finishIcon1 from "../../assets/cheese-1-svgrepo-com.svg";
+
+import startIcon from "../../assets/rat-svgrepo-com.svg";
+import finishIcon from "../../assets/cheese-1-svgrepo-com.svg";
 
 function Node({ node,onMouseDown,
     onMouseEnter,
@@ -30,7 +28,7 @@ function Node({ node,onMouseDown,
     {
         node.isStart &&
         <img
-            src={startIcon2}
+            src={startIcon}
             className="node-icon"
              
         />
@@ -39,7 +37,7 @@ function Node({ node,onMouseDown,
     {
         node.isEnd &&
         <img
-            src={finishIcon1}
+            src={finishIcon}
             className="node-icon"
         />
     }

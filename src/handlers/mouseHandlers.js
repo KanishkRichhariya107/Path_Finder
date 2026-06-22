@@ -24,14 +24,14 @@ function handleMouseDown(row,col,grid,setGrid,setIsDragStart,setIsDragEnd,setMou
         setMousePressed(false);
         setIsRemovingWall(false);
     }
-    function handleMouseEnter(row,col,grid,setGrid,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall){
+    function handleMouseEnter(row,col,grid,setGrid,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall,startPosition,endPosition,setStartPosition,setEndPosition){
         
         if(isDragStart){
-                     moveStartNode(row,col)
+                     moveStartNode(row,col,grid,setGrid,startPosition,setStartPosition)
                      return;
         }
         if(isDragEnd){
-                     moveEndNode(row,col)
+                     moveEndNode(row,col,grid,setGrid,endPosition,setEndPosition)
                      return;
         }
         if(!mousePressed) return;

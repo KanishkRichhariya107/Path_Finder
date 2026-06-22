@@ -65,7 +65,7 @@ useEffect(() => {
                     node={node}
                     onMouseDown={()=>handleMouseDown(node.row,node.col,grid,setGrid,setIsDragStart,setIsDragEnd,setMousePressed,setIsRemovingWall)}
                     onMouseUp={()=>handleMouseUp(    setMousePressed,setIsDragStart,setIsDragEnd,setIsRemovingWall)}
-                    onMouseEnter={()=>handleMouseEnter(node.row,node.col,grid,setGrid,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall)}
+                    onMouseEnter={()=>handleMouseEnter(node.row,node.col,grid,setGrid,isDragStart,isDragEnd,moveStartNode,moveEndNode,mousePressed,isRemovingWall,startPosition,endPosition,setStartPosition,setEndPosition)}
                     />
                 ))
             }

@@ -1,4 +1,4 @@
-export function moveStartNode(row, col,grid,setgrid,startPosition,setStartPosition) {
+export function moveStartNode(row, col,grid,setGrid,startPosition,setStartPosition) {
     const newGrid = [...grid];
         const newStart =newGrid[row][col];
         if(newStart.isWall)
@@ -15,7 +15,7 @@ export function moveStartNode(row, col,grid,setgrid,startPosition,setStartPositi
     setGrid(newGrid);
 }
 
-export function moveEndNode(row, col,grid,setgrid,endPosition,setEndPosition) {
+export function moveEndNode(row, col,grid,setGrid,endPosition,setEndPosition) {
     const newGrid = [...grid];
     const newEnd =newGrid[row][col];
         if(newEnd.isWall)
