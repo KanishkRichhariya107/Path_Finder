@@ -1,4 +1,4 @@
-import "./Legend.css";
+import "./legend.css";
 import startImg from "../../assets/rat-svgrepo-com.svg";
 import endImg from "../../assets/cheese-1-svgrepo-com.svg";
 
