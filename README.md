@@ -1,5 +1,7 @@
 # Path Finder Visualizer
 
+Live Demo: https://path-finder-ecru.vercel.app
+
 Path Finder Visualizer is an interactive web application that helps visualize how different pathfinding algorithms work. It allows users to create walls, move the start and target nodes, generate mazes, and watch various algorithms search for the shortest path through smooth animations.
 
 The project was built from scratch using React and JavaScript with the goal of understanding graph traversal algorithms and creating an intuitive way to visualize them.
