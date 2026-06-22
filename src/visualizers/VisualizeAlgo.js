@@ -14,7 +14,9 @@ export function Visualize(Algorithm,grid,setGrid,setIsAnimating,startPosition,en
     const startnode=newgrid[startPosition.row][startPosition.col]
     const EndNode=newgrid[endPosition.row][endPosition.col]
     let result=[]
-    if(Algorithm=="BFS")
+    if(!Algorithm)
+     return;
+    else if(Algorithm=="BFS")
      result=bfs(newgrid,startnode,EndNode)
     else if(Algorithm==="DFS")
          result=dfs(newgrid,startnode,EndNode)
